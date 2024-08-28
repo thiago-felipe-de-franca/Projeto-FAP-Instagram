@@ -1,8 +1,11 @@
+import { faker } from '@faker-js/faker'
+
 class Post {
     private _userName: string;
     private _imageUrl: string;
     private _description: string;
     private _numLikes: number;
+    private uuid: string;
   
     constructor(userName: string, imageUrl: string, description: string) {
       this._userName = userName;
@@ -36,15 +39,17 @@ class Post {
     }
   }
   
-  const post1 = new Post("augustocesar", "http://...", "Imagem 1");
-  console.log(post1);
-  const post2 = new Post("maria", "http://...", "Imagem 2");
-  post1.description = "Outra descrição";
-  console.log(post1);
-  
-  // console.log(post1.userName);
-  // console.log(post2.userName);
-  
-  post1.incrementLike();
-  post1.incrementLike();
-  // console.log(post1);
+const post1 = new Post("augustocesar", "http://...", "Imagem 1");
+console.log(post1);
+
+function gerarPosts(quantidade: number) {
+  const posts: Post[] = []
+
+  for (let index = 0; index < quantidade; index++) {
+    let postArray = new Post(faker.person.firstName(),faker.internet.url(),faker.image.avatar())
+    posts.push(postArray)
+  }
+  return posts
+}
+
+console.log(gerarPosts(15))
