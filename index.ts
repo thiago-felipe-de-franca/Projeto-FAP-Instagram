@@ -1,55 +1,57 @@
-import { faker } from '@faker-js/faker'
+import {v4 as randomUUID} from "uuid"
+import {faker} from "@faker-js/faker"
 
 class Post {
-    private _userName: string;
-    private _imageUrl: string;
-    private _description: string;
-    private _numLikes: number;
-    private uuid: string;
-  
-    constructor(userName: string, imageUrl: string, description: string) {
-      this._userName = userName;
-      this._imageUrl = imageUrl;
-      this._description = description;
-      this._numLikes = 0;
-    }
-  
-    get userName() {
-      return this._userName;
-    }
-  
-    get imageUrl() {
-      return this._imageUrl;
-    }
-  
-    get description() {
-      return this._description;
-    }
-  
-    set description(description: string) {
-      this._description = description;
-    }
-  
-    get numLikes() {
-      return this._numLikes;
-    }
-  
-    incrementLike() {
-      this._numLikes += 1;
+  private _id: string = randomUUID()
+  private _userName: string;
+  private _imageUrl: string;
+  private _avatarUrl: string;
+  private _description: string;
+  private _isLiked: boolean = false;
+  private _numberOfLikes: number = 0;
+  private _createdAt: Date = new Date()
+
+  constructor(
+    userName: string,
+    avatarUrl: string, 
+    imageUrl: string, 
+    description: string
+  ) {
+    this._userName = userName;
+    this._imageUrl = imageUrl;
+    this._description = description;
+    this._avatarUrl = avatarUrl;
+  }
+
+  like(){
+    this._isLiked = !this._isLiked
+
+    if (this._isLiked == true) {
+      this._numberOfLikes++
+    } else {
+      this._numberOfLikes--
     }
   }
-  
-const post1 = new Post("augustocesar", "http://...", "Imagem 1");
-console.log(post1);
-
-function gerarPosts(quantidade: number) {
-  const posts: Post[] = []
-
-  for (let index = 0; index < quantidade; index++) {
-    let postArray = new Post(faker.person.firstName(),faker.internet.url(),faker.image.avatar())
-    posts.push(postArray)
-  }
-  return posts
 }
 
-console.log(gerarPosts(15))
+
+const posts: Post[] = []
+
+for (let index = 0; index < 15; index++) {
+  const post = new Post(
+    faker.person.firstName(), 
+    faker.image.avatarGitHub(), 
+    faker.image.urlPicsumPhotos(), 
+    faker.lorem.paragraph()
+  )
+  posts.push(post)
+}
+console.log("testando")
+// console.log(posts)
+
+// const firstPost = posts[0]
+
+// firstPost.like()
+// console.log(firstPost)
+// firstPost.like()
+// console.log(firstPost)
